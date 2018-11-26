@@ -32,5 +32,5 @@ double get_speed(Car car);
 Car get_car(enum CarType type);
 void set_acceleration_rate(Car car,double rate);
 void init();
-
+void accelerate(Car car);
 #endif

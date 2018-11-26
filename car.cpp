@@ -6,7 +6,7 @@ struct TestCase{
   enum Color color;
   double fill_level;
   double acc_rate;
-  double speed;
+  int speed;
   bool is_rented;
 };
 
@@ -63,7 +63,31 @@ Car get_car(enum CarType type)
 
 void set_acceleration_rate(Car car,double rate)
 {
-  car->acc_rate=rate;
+  if(rate>1.0&&car->type==AIXAM)
+  {
+    rate=1.0;
+    car->acc_rate=rate;
+
+  }
+  else if(rate>2.26&&car->type==FIAT_MULTIPLA)
+  {
+    rate=2.26;
+    car->acc_rate=rate;
+  }
+  else if(rate>3.14&&car->type==JEEP)
+  {
+    rate=3.14;
+    car->acc_rate=rate;
+  }
+  if(rate<-8.0)
+  {
+    rate=-8.0;
+    car->acc_rate=rate;
+  }
+  else
+  {
+    car->acc_rate=rate;
+  }
 }
 
 void init()
@@ -71,5 +95,28 @@ void init()
   for(int i=0;i<CARCOUNT;i++)
   {
     car_park[i]->is_rented=false;
+    car_park[i]->acc_rate=0;
+    car_park[i]->speed=0;
   }
+}
+
+void accelerate(Car car)
+{
+  double speed=car->speed;
+  speed/=3.6;
+  speed+=car->acc_rate;
+  speed*=3.6;
+
+  if(car->speed%10>4)
+  {
+    speed++;
+    speed-=((int)speed%10);
+    car->speed=(int)speed;
+  }
+  else
+  {
+    speed-=((int)speed%10);
+    car->speed=(int)speed;
+  }
+
 }
