@@ -104,14 +104,10 @@ void init()
 
 void accelerate(Car car)
 {
-  double speed=car->speed;
-  speed+=car->acc_rate*3.6;
-  car->speed=round(speed);
-  car->speed++;
+  car->speed+=round(car->acc_rate*3.6);
 
-  if(round(speed)>car->max_speed)
+  if(car->speed>car->max_speed)
   {
     car->speed=car->max_speed;
   }
-
 }
