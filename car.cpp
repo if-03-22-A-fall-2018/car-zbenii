@@ -7,7 +7,7 @@ struct TestCase{
   enum Color color;
   double fill_level;
   double acc_rate;
-  int speed;
+  double speed;
   bool is_rented;
   int max_speed;
 };
@@ -43,7 +43,7 @@ double get_acceleration_rate(Car car)
 
 double get_speed(Car car)
 {
-  return car->speed;
+  return round(car->speed);
 }
 
 Car get_car(enum CarType type)
@@ -104,7 +104,7 @@ void init()
 
 void accelerate(Car car)
 {
-  car->speed+=round(car->acc_rate*3.6);
+  car->speed+=car->acc_rate*3.6;
 
   if(car->speed>car->max_speed)
   {
