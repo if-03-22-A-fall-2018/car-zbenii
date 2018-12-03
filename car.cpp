@@ -1,4 +1,5 @@
 #include "car.h"
+#include <math.h>
 #define CARCOUNT 6
 
 struct TestCase{
@@ -8,14 +9,15 @@ struct TestCase{
   double acc_rate;
   int speed;
   bool is_rented;
+  int max_speed;
 };
 
-static struct TestCase multipla1={FIAT_MULTIPLA,GREEN,65.0,0.0,0,false};
-static struct TestCase multipla2={FIAT_MULTIPLA,BLUE,65.0,0.0,0,false};
-static struct TestCase multipla3={FIAT_MULTIPLA,ORANGE,65.0,0.0,0,false};
-static struct TestCase aixam={AIXAM,RED,16.0,0.0,0,false};
-static struct TestCase jeep1={JEEP,SILVER,80.0,0.0,0,false};
-static struct TestCase jeep2={JEEP,BLACK,80.0,0.0,0,false};
+static struct TestCase multipla1={FIAT_MULTIPLA,GREEN,65.0,0.0,0,false,170};
+static struct TestCase multipla2={FIAT_MULTIPLA,BLUE,65.0,0.0,0,false,170};
+static struct TestCase multipla3={FIAT_MULTIPLA,ORANGE,65.0,0.0,0,false,170};
+static struct TestCase aixam={AIXAM,RED,16.0,0.0,0,false,45};
+static struct TestCase jeep1={JEEP,SILVER,80.0,0.0,0,false,196};
+static struct TestCase jeep2={JEEP,BLACK,80.0,0.0,0,false,196};
 
 Car car_park[]={&aixam,&multipla1,&multipla2,&multipla3,&jeep1,&jeep2};
 
@@ -103,20 +105,13 @@ void init()
 void accelerate(Car car)
 {
   double speed=car->speed;
-  speed/=3.6;
-  speed+=car->acc_rate;
-  speed*=3.6;
+  speed+=car->acc_rate*3.6;
+  car->speed=round(speed);
+  car->speed++;
 
-  if(car->speed%10>4)
+  if(round(speed)>car->max_speed)
   {
-    speed++;
-    speed-=((int)speed%10);
-    car->speed=(int)speed;
-  }
-  else
-  {
-    speed-=((int)speed%10);
-    car->speed=(int)speed;
+    car->speed=car->max_speed;
   }
 
 }
